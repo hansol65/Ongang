@@ -8,11 +8,15 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private bool isGrounded;
+    Animator anim;
+    SpriteRenderer sr;
 
     private void Awake()
     {
         //initializing
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -26,6 +30,17 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false; // 점프 중 상태
         }
+
+        // 방향 전환
+        if (Input.GetButton("Horizontal"))
+            sr.flipX = Input.GetAxisRaw("Horizontal") == -1;
+       
+        // Animation
+        if (Mathf.Abs(rb.velocity.x) < 0.3)
+            anim.SetBool("isWalking", false);
+        else
+            anim.SetBool("isWalking", true);
+
     }
 
     private void FixedUpdate()
