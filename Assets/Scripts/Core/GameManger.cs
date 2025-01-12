@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
         BattleTest();
     }
 
+
+    // Battle test code
     private void BattleTest()
     {
         // 플레이어와 적 유닛 생성
@@ -54,10 +56,5 @@ public class GameManager : MonoBehaviour
         Enemy enemy = new GameObject(name).AddComponent<Enemy>();
         enemy.Initialize(name, health, attack);
         return enemy;
-    }
-
-    public void GoToBattleField()
-    {
-        SceneManager.LoadScene("Battlefield");
     }
 }
