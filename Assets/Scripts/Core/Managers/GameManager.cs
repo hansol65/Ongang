@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager
 {
     //public static GameManager Instance { get; private set; }
     //public BattleManager battleManager;
