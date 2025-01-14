@@ -6,12 +6,7 @@ public class AttackAI : MonoBehaviour
     public Unit targetUnit; // 공격 대상 유닛
     public float attackRange = 1.5f; // 공격 범위
     private float attackCooldown; // 공격 대기 시간
-    private Animator animator;
 
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
 
     private void Update()
     {
@@ -33,8 +28,6 @@ public class AttackAI : MonoBehaviour
     private void Attack()
     {
         if (targetUnit == null || targetUnit.currentHP <= 0) return;
-
-        animator.SetTrigger("Attack");
 
         Debug.Log($"{gameObject.name}이(가) {targetUnit.gameObject.name}을(를) 공격합니다!");
         targetUnit.takeDamage(unit.attackPower);
