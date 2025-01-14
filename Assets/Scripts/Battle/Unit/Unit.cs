@@ -1,34 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    // Start is called before the first frame update
-    [Header("Unit Stat")]
-    public string unitName;
     public int maxHP;
     public int currentHP;
     public int attackPower;
+    public float attackSpeed;
 
-    public virtual void Initialize(string name, int health, int attack)
+    SpriteRenderer spriteRenderer;
+    BoxCollider2D boxCollider;
+    Rigidbody2D rigid;
+
+    void Awake()
     {
-        unitName = name;
-        maxHP = health;
-        currentHP = maxHP;
-        attackPower = attack;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        rigid = GetComponent<Rigidbody2D>();
     }
-    public void TakeDamage(int damage)
+
+    public void takeDamage(int damage)
     {
         currentHP -= damage;
-        currentHP = Mathf.Max(0, currentHP); // 체력이 0 이하로 내려가지 않게 제한
+        if(currentHP <= 0)
+        {
+            currentHP = 0;
+            Die();
+        }
+        Debug.Log($"{gameObject.name} 체력: {currentHP}");
     }
-
-    public virtual void Attack(Unit target)
+    private void Die()
     {
-        Debug.Log($"{unitName} attacks {target.unitName} for {attackPower} damage!");
-        target.TakeDamage(attackPower);
+        Debug.Log($"{gameObject.name}이(가) 사망했습니다.");
+
+        // Sprite Alpha
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+        // Sprite Flip Y
+        spriteRenderer.flipY = true;
+        // Collider Disable
+        boxCollider.enabled = false;
+        // Die Effect Jump
+        rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+        // Destroy
+        Invoke("DeActive", 0.5f);
+    }
+    void DeActive()
+    {
+        gameObject.SetActive(false);
     }
 
 }
