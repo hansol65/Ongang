@@ -9,9 +9,11 @@ public class Managers : MonoBehaviour
 
     GameManager s_game = new GameManager();
     SceneManagerEx s_scene = new SceneManagerEx();
+    PageManager s_page = new PageManager();
 
     public static GameManager Game { get { return Instance.s_game; } }
     public static SceneManagerEx Scene { get { return Instance.s_scene; } }
+    public static PageManager Page { get { return Instance.s_page; } }
 
     static void Init()
     {

@@ -2,18 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PageManager : MonoBehaviour
+public class PageManager
 {
-    public GameObject DevilMap;
-    public GameObject Lobby;
-
-    private void OnMouseDown()
+    public void ChangePage(GameObject current, GameObject next)
     {
-        // DevilMap 활성화
-        DevilMap.SetActive(true);
-        // Lobby 비활성화
-        Lobby.SetActive(false);
+        current.SetActive(false);
+        next.SetActive(true);
 
-        Debug.Log("데빌맵으로 이동");
+        Debug.Log("Change complete!");
     }
 }
