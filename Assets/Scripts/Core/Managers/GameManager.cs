@@ -3,6 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager
 {
+    private string activeStageName;
+
+    public void SetActiveStage(string stageName)
+    {
+        activeStageName = stageName;
+    }
+    public string GetActiveStage()
+    {
+        return activeStageName;
+    }
     //public static GameManager Instance { get; private set; }
     //public BattleManager battleManager;
 

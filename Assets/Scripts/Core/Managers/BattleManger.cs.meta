@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c2890350cab01c547a6ee9473099851d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Stage_1: {instanceID: 0}
+  - Stage_2: {instanceID: 0}
+  - Stage_3: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
