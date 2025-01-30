@@ -4,30 +4,27 @@ public class BattleManager
 {
     public static string currentStageName;
 
+    public static StageData stageData;
+
     public void OnBattleSceneLoaded()
     {
-        GameObject stageContainer = GameObject.Find("StageContainer");
+        SpawnEnemies();
+    }
 
-        if (stageContainer != null)
+    private void SpawnEnemies()
+    {
+        for (int i = 0; i < stageData.monsterPrefabs.Length; i++)
         {
-            Transform childTransform = stageContainer.transform.Find(currentStageName);
-
-            if(childTransform != null)
+            for (int j = 0; j < stageData.monsterCounts[i]; j++)
             {
-                GameObject stage1 = childTransform.gameObject;
-                if (stage1 != null)
-                {
-                    stage1.SetActive(true);
-                }
-            }
-            else
-            {
-                Debug.Log($"Stage {currentStageName} not found in BattleScene.");
+                Vector2 spawnPos = GetRandomSpawnPosition();
+                Object.Instantiate(stageData.monsterPrefabs[i], spawnPos, Quaternion.identity);
             }
         }
-        else
-        {
-            Debug.LogError("StageContainer not found in BattleScene.");
-        }
+    }
+
+    private Vector2 GetRandomSpawnPosition()
+    {
+        return new Vector2(Random.Range(-5, 5), 0);
     }
 }

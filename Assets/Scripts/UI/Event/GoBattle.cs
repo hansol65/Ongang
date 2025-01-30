@@ -6,8 +6,7 @@ public class GoBattle : MonoBehaviour
 {
     public void OnMouseDown()
     {
-        string suffix = gameObject.name.Substring(gameObject.name.Length - 1);
-        BattleManager.currentStageName = suffix;
+        BattleManager.stageData = Resources.Load<StageData>($"StageData/{gameObject.name}");
 
         Managers.Scene.LoadScene("BattleScene");
 
