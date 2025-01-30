@@ -32,6 +32,9 @@ public class SceneManagerEx
         if (scene.name == "BattleScene")
         {
             Managers.Battle.OnBattleSceneLoaded();
-        }
+            Managers.Player.EnterBattleField();
+        } else {
+            Managers.Player.ExitBattleField(); // 배틀필드 종료
+         }
     }
 }

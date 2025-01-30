@@ -29,6 +29,55 @@ public class PlayerManager
             playerUnitInstance.AddComponent<Unit>();
         }
 
-    Debug.Log("[PlayerManager] Player Unit created.");
+        // Attach: AttackAI
+        if (playerUnitInstance.GetComponent<AttackAI>() == null)
+        {
+            var attackAI = playerUnitInstance.AddComponent<AttackAI>();
+            attackAI.enabled = false; // 처음부터 AttackAI 비활성화
+        }
+
+        Debug.Log("[PlayerManager] Player Unit created.");
+    }
+
+    public void EnterBattleField()
+    {
+        if (playerUnitInstance == null) return;
+
+        var movementAI = playerUnitInstance.GetComponent<MovementAI>();
+        if (movementAI != null)
+        {
+            movementAI.StopMovement();
+            movementAI.enabled = false;
+        }
+
+        var attackAI = playerUnitInstance.GetComponent<AttackAI>();
+        if (attackAI != null)
+        {
+            attackAI.enabled = true;
+        }
+
+        Debug.Log("[PlayerManager] Entered Battle Field.");
+    }
+
+    public void ExitBattleField()
+    {
+        if (playerUnitInstance == null) return;
+
+        // MovementAI 활성화
+        var movementAI = playerUnitInstance.GetComponent<MovementAI>();
+        if (movementAI != null)
+        {
+            movementAI.enabled = true;
+            movementAI.ResumeMovement();
+        }
+
+        // AttackAI 비활성화
+        var attackAI = playerUnitInstance.GetComponent<AttackAI>();
+        if (attackAI != null)
+        {
+            attackAI.enabled = false;
+        }
+
+        Debug.Log("[PlayerManager] Exited Battle Field.");
     }
 }

@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public int maxHP;
-    public int currentHP;
-    public int attackPower;
-    public float attackSpeed;
+    public int maxHP = 10;
+    public int currentHP = 10;
+    public int attackPower = 1;
+    public float attackSpeed = 1;
 
     SpriteRenderer spriteRenderer;
     BoxCollider2D boxCollider;
@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
         rigid = GetComponent<Rigidbody2D>();
+
     }
 
     public void takeDamage(int damage)
@@ -28,7 +29,7 @@ public class Unit : MonoBehaviour
         }
         Debug.Log($"{gameObject.name} 체력: {currentHP}");
     }
-    private void Die()
+    public void Die()
     {
         Debug.Log($"{gameObject.name}이(가) 사망했습니다.");
 
