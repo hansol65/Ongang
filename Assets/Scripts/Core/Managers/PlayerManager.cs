@@ -18,13 +18,13 @@ public class PlayerManager
         Object.DontDestroyOnLoad(playerUnitInstance);
 
         // Attach: MovementAI
-        if (playerUnitInstance.GetComponent<MovementAI>() != null)
+        if (playerUnitInstance.GetComponent<MovementAI>() == null)
         {
             playerUnitInstance.AddComponent<MovementAI>();
         }
 
         // Attach: Unit
-        if(playerUnitInstance.GetComponent<Unit>() != null)
+        if(playerUnitInstance.GetComponent<Unit>() == null)
         {
             playerUnitInstance.AddComponent<Unit>();
         }
