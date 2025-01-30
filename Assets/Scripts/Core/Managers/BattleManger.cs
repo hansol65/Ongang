@@ -3,30 +3,31 @@ using UnityEngine;
 public class BattleManager
 {
     public static string currentStageName;
-    private GameObject currentStageObject;
 
-    public void battleInit()
+    public void OnBattleSceneLoaded()
     {
-        // GameObject 찾기
-        currentStageObject = GameObject.Find(currentStageName);
+        GameObject stageContainer = GameObject.Find("StageContainer");
 
-        if (currentStageObject == null)
+        if (stageContainer != null)
         {
-            Debug.LogError($"GameObject with name '{currentStageName}' not found in the scene!");
-            return;
-        }
+            Transform childTransform = stageContainer.transform.Find(currentStageName);
 
-        // 활성화
-        currentStageObject.SetActive(true);
-
-        // 활성화 상태 확인
-        if (currentStageObject.activeSelf)
-        {
-            Debug.Log($"{currentStageObject.name} is now active!");
+            if(childTransform != null)
+            {
+                GameObject stage1 = childTransform.gameObject;
+                if (stage1 != null)
+                {
+                    stage1.SetActive(true);
+                }
+            }
+            else
+            {
+                Debug.Log($"Stage {currentStageName} not found in BattleScene.");
+            }
         }
         else
         {
-            Debug.LogError($"{currentStageObject.name} could not be activated!");
+            Debug.LogError("StageContainer not found in BattleScene.");
         }
     }
 }
