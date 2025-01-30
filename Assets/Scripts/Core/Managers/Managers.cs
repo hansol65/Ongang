@@ -11,11 +11,13 @@ public class Managers : MonoBehaviour
     SceneManagerEx s_scene = new SceneManagerEx();
     PageManager s_page = new PageManager();
     BattleManager s_battle = new BattleManager();
+    PlayerManager s_player = new PlayerManager();
 
     public static GameManager Game { get { return Instance.s_game; } }
     public static SceneManagerEx Scene { get { return Instance.s_scene; } }
     public static PageManager Page { get { return Instance.s_page; } }
     public static BattleManager Battle { get { return Instance.s_battle; } }
+    public static PlayerManager Player { get { return Instance.s_player; } }
 
     static void Init()
     {
