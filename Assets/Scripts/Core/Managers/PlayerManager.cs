@@ -10,12 +10,17 @@ public class PlayerManager
     {
         if (playerUnitInstance != null)
         {
-            Debug.Log("Player Unit already exist.");
+            Debug.Log("Player Unit already exists.");
             return;
         }
 
+        // Instantiate the player unit
         playerUnitInstance = Object.Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
         Object.DontDestroyOnLoad(playerUnitInstance);
+
+        // Set layer to "Player" (Layer 6)
+        playerUnitInstance.layer = 6; // Assuming Layer 6 corresponds to "Player"
+        Debug.Log($"[PlayerManager] Player Unit layer set to: {LayerMask.LayerToName(6)}");
 
         // Attach: MovementAI
         if (playerUnitInstance.GetComponent<MovementAI>() == null)
@@ -24,7 +29,7 @@ public class PlayerManager
         }
 
         // Attach: Unit
-        if(playerUnitInstance.GetComponent<Unit>() == null)
+        if (playerUnitInstance.GetComponent<Unit>() == null)
         {
             playerUnitInstance.AddComponent<Unit>();
         }

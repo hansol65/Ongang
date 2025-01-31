@@ -1,17 +1,17 @@
 using UnityEngine;
 
-public class AttackAI : MonoBehaviour
+public class EnemyAttackAI : MonoBehaviour
 {
     public float moveSpeed = 2f; // 이동 속도
     private Rigidbody2D rigidBody;
-    private Transform target; // 타겟 (Enemy)
+    private Transform target; // 타겟 (Player)
     private bool isColliding = false; // 충돌 상태 확인
 
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
 
-        // Enemy 레이어를 찾아 타겟 설정
+        // Player 레이어를 찾아 타겟 설정
         FindEnemy();
     }
 
@@ -39,7 +39,7 @@ public class AttackAI : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log($"{gameObject.name}가 {collision.gameObject.name}와 충돌했습니다.");
             isColliding = true; // 충돌 상태 설정
@@ -49,18 +49,17 @@ public class AttackAI : MonoBehaviour
 
     private void FindEnemy()
     {
-        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        int enemyLayer = LayerMask.NameToLayer("Player");
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, 10f, 1 << enemyLayer);
 
         if (enemies.Length > 0)
         {
-            // 가장 가까운 적을 타겟으로 설정
-            target = enemies[0].transform;
+            target = enemies[0].transform; // 가장 가까운 적을 타겟으로 설정
             Debug.Log($"타겟 설정: {target.name}");
         }
         else
         {
-            Debug.LogWarning("Enemy를 찾을 수 없습니다!");
+            Debug.LogWarning("적을 찾을 수 없습니다!");
         }
     }
 }
