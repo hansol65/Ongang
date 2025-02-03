@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 406382345450285208}
   - component: {fileID: 5874207762149010314}
   - component: {fileID: 3177043866268124322}
-  m_Layer: 0
+  - component: {fileID: 299969125458124675}
+  - component: {fileID: 8713762520017868396}
+  m_Layer: 7
   m_Name: DynamicEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,3 +160,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &299969125458124675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953001535328855733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c9eb4984f9aa81499f679aa506b5feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  isColliding: 0
+--- !u!114 &8713762520017868396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953001535328855733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea2ac2590af74bd489e90a84eec44268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 10
+  currentHP: 5
+  attackPower: 1
+  attackSpeed: 1

@@ -17,6 +17,9 @@ public class PlayerManager
         playerUnitInstance = Object.Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
         Object.DontDestroyOnLoad(playerUnitInstance);
 
+        // Player layer·Î ¼³Á¤
+        playerUnitInstance.layer = LayerMask.NameToLayer("Player");
+
         // Attach: MovementAI
         if (playerUnitInstance.GetComponent<MovementAI>() == null)
         {
