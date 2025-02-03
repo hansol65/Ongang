@@ -7,6 +7,8 @@ public class Unit : MonoBehaviour
     public int attackPower = 1;
     public float attackSpeed = 1;
 
+    public Stat stat = new Stat { Exp = 0 };
+
     SpriteRenderer spriteRenderer;
     BoxCollider2D boxCollider;
     Rigidbody2D rigid;

@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.IO;
+using System.Runtime.CompilerServices;
 
 public class AttackAI : MonoBehaviour
 {
@@ -100,6 +102,17 @@ public class AttackAI : MonoBehaviour
             {
                 targetUnit.takeDamage(GetComponent<Unit>().attackPower);
                 Debug.Log($"{gameObject.name}이(가) {target.name}에게 공격을 가했습니다!");
+
+
+                // test
+                Unit unit = GetComponent<Unit>();
+
+                unit.stat.Exp += 1;
+                Debug.Log($"Exp : {unit.stat.Exp}");
+
+                string jsonData = JsonUtility.ToJson(unit.stat);
+                string path = Path.Combine(Application.dataPath, "PlayerData.json");
+                File.WriteAllText(path, jsonData);
             }
         }
     }
