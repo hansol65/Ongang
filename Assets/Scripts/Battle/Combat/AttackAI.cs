@@ -1,6 +1,15 @@
 using UnityEngine;
 using System.IO;
 using System.Runtime.CompilerServices;
+using UnityEditor;
+
+public enum UnitState
+{
+    Idle,
+    Searching,
+    Fighting,
+    Dead
+}
 
 public class AttackAI : MonoBehaviour
 {
@@ -10,6 +19,7 @@ public class AttackAI : MonoBehaviour
     private Transform target; // 타겟 (Enemy)
     public bool isColliding = false; // 충돌 상태 확인
     private float lastAttackTime; // 마지막 공격 시간
+    private UnitState currentState = UnitState.Searching; // 유닛의 현재 상태 (초기값: 탐색)
 
     private void Start()
     {
@@ -21,13 +31,33 @@ public class AttackAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isColliding && target != null)
+        switch (currentState)
         {
-            Move(target.position); // 타겟으로 이동
-        }
-        else if (isColliding && target != null)
-        {
-            Attack(); // 배틀 시작
+            case UnitState.Idle:
+                // 아무것도 하지 않고 대기
+                break;
+            case UnitState.Searching:
+                if (target == null)
+                {
+                    FindEnemy();
+                }
+
+                if (target != null && !isColliding)
+                {
+                    Move(target.position);
+                }
+                break;
+
+            case UnitState.Fighting:
+                if (isColliding && target != null)
+                {
+                    Attack();
+                }
+                break;
+
+            case UnitState.Dead:
+                // 아무것도 하지 않음 (추후 사망 애니메이션이나 삭제 처리 가능)
+                break;
         }
     }
 
@@ -53,6 +83,8 @@ public class AttackAI : MonoBehaviour
             isColliding = true; // 충돌 상태 설정
             rigidBody.velocity = Vector2.zero; // 이동 멈춤
             target = collision.transform; // 충돌한 Enemy를 타겟으로 설정
+
+            currentState = UnitState.Fighting;
         }
     }
 
@@ -81,6 +113,7 @@ public class AttackAI : MonoBehaviour
         {
             target = null; // 타겟 없음
             Debug.LogWarning("Enemy를 찾을 수 없습니다!");
+            currentState = UnitState.Idle; // 대기 상태
         }
     }
 
@@ -101,8 +134,6 @@ public class AttackAI : MonoBehaviour
             if (targetUnit != null)
             {
                 targetUnit.takeDamage(GetComponent<Unit>().attackPower);
-                Debug.Log($"{gameObject.name}이(가) {target.name}에게 공격을 가했습니다!");
-
 
                 // test
                 Unit unit = GetComponent<Unit>();
