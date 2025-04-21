@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class PlayerManager
 {
@@ -30,6 +31,8 @@ public class PlayerManager
         if(playerUnitInstance.GetComponent<Unit>() == null)
         {
             playerUnitInstance.AddComponent<Unit>();
+            initUnit(playerUnitInstance.GetComponent<Unit>());
+            Debug.Log($"현재 경험치: {playerUnitInstance.GetComponent<Unit>().stat.Exp}");
         }
 
         // Attach: AttackAI
@@ -40,6 +43,13 @@ public class PlayerManager
         }
 
         Debug.Log("[PlayerManager] Player Unit created.");
+    }
+
+    private void initUnit(Unit unit)
+    {
+        string path = Path.Combine(Application.dataPath, "PlayerData.json");
+        string jsonData = File.ReadAllText(path);
+        unit.stat = JsonUtility.FromJson<Stat>(jsonData);
     }
 
     public void EnterBattleField()
