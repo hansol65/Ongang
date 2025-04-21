@@ -13,19 +13,19 @@ public enum UnitState
 
 public class AttackAI : MonoBehaviour
 {
-    public float moveSpeed = 2f; // ÀÌµ¿ ¼Óµµ
-    public float attackCooldown = 1f; // °ø°Ý ÄðÅ¸ÀÓ
+    public float moveSpeed = 2f; // ï¿½Ìµï¿½ ï¿½Óµï¿½
+    public float attackCooldown = 1f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½
     private Rigidbody2D rigidBody;
-    private Transform target; // Å¸°Ù (Enemy)
-    public bool isColliding = false; // Ãæµ¹ »óÅÂ È®ÀÎ
-    private float lastAttackTime; // ¸¶Áö¸· °ø°Ý ½Ã°£
-    private UnitState currentState = UnitState.Searching; // À¯´ÖÀÇ ÇöÀç »óÅÂ (ÃÊ±â°ª: Å½»ö)
+    private Transform target; // Å¸ï¿½ï¿½ (Enemy)
+    public bool isColliding = false; // ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+    private float lastAttackTime; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    private UnitState currentState = UnitState.Searching; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ê±â°ª: Å½ï¿½ï¿½)
 
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
 
-        // Enemy ·¹ÀÌ¾î¸¦ Ã£¾Æ Å¸°Ù ¼³Á¤
+        // Enemy ï¿½ï¿½ï¿½Ì¾î¸¦ Ã£ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         FindEnemy();
     }
 
@@ -34,7 +34,7 @@ public class AttackAI : MonoBehaviour
         switch (currentState)
         {
             case UnitState.Idle:
-                // ¾Æ¹«°Íµµ ÇÏÁö ¾Ê°í ´ë±â
+                // ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½
                 break;
             case UnitState.Searching:
                 if (target == null)
@@ -46,32 +46,40 @@ public class AttackAI : MonoBehaviour
                 {
                     Move(target.position);
                 }
+
+                if (isColliding)
+                {
+                    currentState = UnitState.Fighting;
+                }
                 break;
 
             case UnitState.Fighting:
                 if (isColliding && target != null)
                 {
                     Attack();
+                } else
+                {
+                    currentState = UnitState.Searching;
                 }
                 break;
 
             case UnitState.Dead:
-                // ¾Æ¹«°Íµµ ÇÏÁö ¾ÊÀ½ (ÃßÈÄ »ç¸Á ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ³ª »èÁ¦ Ã³¸® °¡´É)
+                // ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
                 break;
         }
     }
 
     private void Move(Vector2 targetPosition)
     {
-        // ´Ü¼øÈ÷ x ¹æÇâ¸¸ °è»êÇÏ¿© ÀÌµ¿
+        // ï¿½Ü¼ï¿½ï¿½ï¿½ x ï¿½ï¿½ï¿½â¸¸ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ìµï¿½
         float direction = targetPosition.x - transform.position.x;
 
-        // ¹æÇâ¿¡ µû¶ó ÀÌµ¿ ¼Óµµ ¼³Á¤ (Normalize »ç¿ëÇÏÁö ¾ÊÀ½)
-        direction = direction > 0 ? 1 : -1; // ¿À¸¥ÂÊ: 1, ¿ÞÂÊ: -1
+        // ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ (Normalize ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        direction = direction > 0 ? 1 : -1; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: 1, ï¿½ï¿½ï¿½ï¿½: -1
 
         rigidBody.velocity = new Vector2(direction * moveSpeed, rigidBody.velocity.y);
 
-        // ½ºÇÁ¶óÀÌÆ® ¹æÇâ ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         GetComponent<SpriteRenderer>().flipX = direction < 0;
     }
 
@@ -79,10 +87,10 @@ public class AttackAI : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            Debug.Log($"{gameObject.name}°¡ {collision.gameObject.name}¿Í Ãæµ¹Çß½À´Ï´Ù.");
-            isColliding = true; // Ãæµ¹ »óÅÂ ¼³Á¤
-            rigidBody.velocity = Vector2.zero; // ÀÌµ¿ ¸ØÃã
-            target = collision.transform; // Ãæµ¹ÇÑ Enemy¸¦ Å¸°ÙÀ¸·Î ¼³Á¤
+            Debug.Log($"{gameObject.name}ï¿½ï¿½ {collision.gameObject.name}ï¿½ï¿½ ï¿½æµ¹ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
+            isColliding = true; // ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            rigidBody.velocity = Vector2.zero; // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+            target = collision.transform; // ï¿½æµ¹ï¿½ï¿½ Enemyï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             currentState = UnitState.Fighting;
         }
@@ -92,9 +100,9 @@ public class AttackAI : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && collision.transform == target)
         {
-            Debug.Log($"{gameObject.name}°¡ {collision.gameObject.name}¿Í Ãæµ¹ÀÌ ³¡³µ½À´Ï´Ù.");
-            isColliding = false; // Ãæµ¹ »óÅÂ ÇØÁ¦
-            target = null; // Å¸°Ù ÃÊ±âÈ­
+            Debug.Log($"{gameObject.name}ï¿½ï¿½ {collision.gameObject.name}ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+            isColliding = false; // ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            target = null; // Å¸ï¿½ï¿½ ï¿½Ê±ï¿½È­
         }
     }
 
@@ -105,15 +113,15 @@ public class AttackAI : MonoBehaviour
 
         if (enemies.Length > 0)
         {
-            // °¡Àå °¡±î¿î ÀûÀ» Å¸°ÙÀ¸·Î ¼³Á¤
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             target = enemies[0].transform;
-            Debug.Log($"Å¸°Ù ¼³Á¤: {target.name}");
+            Debug.Log($"Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: {target.name}");
         }
         else
         {
-            target = null; // Å¸°Ù ¾øÀ½
-            Debug.LogWarning("Enemy¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!");
-            currentState = UnitState.Idle; // ´ë±â »óÅÂ
+            target = null; // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.LogWarning("Enemyï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!");
+            currentState = UnitState.Idle; // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 
@@ -121,11 +129,12 @@ public class AttackAI : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.LogWarning("Å¸°ÙÀÌ ¾ø½À´Ï´Ù. °ø°ÝÀ» ¸ØÃä´Ï´Ù.");
-            return; // Å¸°ÙÀÌ ¾øÀ¸¸é °ø°Ý Áß´Ü
+            Debug.LogWarning("Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+            currentState = UnitState.Searching;
+            return; // Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß´ï¿½
         }
 
-        // ÄðÅ¸ÀÓ Ã¼Å©
+        // ï¿½ï¿½Å¸ï¿½ï¿½ Ã¼Å©
         if (Time.time - lastAttackTime >= attackCooldown)
         {
             lastAttackTime = Time.time;

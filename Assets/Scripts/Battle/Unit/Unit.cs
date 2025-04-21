@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 public class Unit : MonoBehaviour
 {
@@ -29,11 +29,11 @@ public class Unit : MonoBehaviour
             currentHP = 0;
             Die();
         }
-        Debug.Log($"{gameObject.name} √º∑¬: {currentHP}");
+        Debug.Log($"{gameObject.name} Ï≤¥Î†•: {currentHP}");
     }
     public void Die()
     {
-        Debug.Log($"{gameObject.name}¿Ã(∞°) ªÁ∏¡«ﬂΩ¿¥œ¥Ÿ.");
+        Debug.Log($"{gameObject.name}Ïù¥(Í∞Ä) ÏÇ¨ÎßùÌñàÏäµÎãàÎã§.");
 
         // Sprite Alpha
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);

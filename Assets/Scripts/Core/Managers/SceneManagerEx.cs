@@ -34,7 +34,7 @@ public class SceneManagerEx
             Managers.Battle.OnBattleSceneLoaded();
             Managers.Player.EnterBattleField();
         } else {
-            Managers.Player.ExitBattleField(); // ¹èÆ²ÇÊµå Á¾·á
+            Managers.Player.ExitBattleField(); // ï¿½ï¿½Æ²ï¿½Êµï¿½ ï¿½ï¿½ï¿½ï¿½
          }
     }
 }
