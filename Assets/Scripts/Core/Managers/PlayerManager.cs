@@ -18,7 +18,7 @@ public class PlayerManager
         playerUnitInstance = Object.Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
         Object.DontDestroyOnLoad(playerUnitInstance);
 
-        // Player layer·Î ¼³Á¤
+        // Player layerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         playerUnitInstance.layer = LayerMask.NameToLayer("Player");
 
         // Attach: MovementAI
@@ -32,14 +32,14 @@ public class PlayerManager
         {
             playerUnitInstance.AddComponent<Unit>();
             initUnit(playerUnitInstance.GetComponent<Unit>());
-            Debug.Log($"ÇöÀç °æÇèÄ¡: {playerUnitInstance.GetComponent<Unit>().stat.Exp}");
+            Debug.Log($"í˜„ìž¬ ê²½í—˜ì¹˜: {playerUnitInstance.GetComponent<Unit>().stat.Exp}");
         }
 
         // Attach: AttackAI
         if (playerUnitInstance.GetComponent<AttackAI>() == null)
         {
             var attackAI = playerUnitInstance.AddComponent<AttackAI>();
-            attackAI.enabled = false; // Ã³À½ºÎÅÍ AttackAI ºñÈ°¼ºÈ­
+            attackAI.enabled = false; // Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ AttackAI ï¿½ï¿½È°ï¿½ï¿½È­
         }
 
         Debug.Log("[PlayerManager] Player Unit created.");
@@ -76,7 +76,7 @@ public class PlayerManager
     {
         if (playerUnitInstance == null) return;
 
-        // MovementAI È°¼ºÈ­
+        // MovementAI È°ï¿½ï¿½È­
         var movementAI = playerUnitInstance.GetComponent<MovementAI>();
         if (movementAI != null)
         {
@@ -84,7 +84,7 @@ public class PlayerManager
             movementAI.ResumeMovement();
         }
 
-        // AttackAI ºñÈ°¼ºÈ­
+        // AttackAI ï¿½ï¿½È°ï¿½ï¿½È­
         var attackAI = playerUnitInstance.GetComponent<AttackAI>();
         if (attackAI != null)
         {
