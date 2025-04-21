@@ -2,16 +2,15 @@ using UnityEngine;
 
 public class EnemyAttackAI : MonoBehaviour
 {
-    public float moveSpeed = 2f; // ÀÌµ¿ ¼Óµµ
+    public float moveSpeed = 2f;
     private Rigidbody2D rigidBody;
-    private Transform target; // Å¸°Ù (Player)
-    public bool isColliding = false; // Ãæµ¹ »óÅÂ È®ÀÎ
+    private Transform target;
+    public bool isColliding = false;
 
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
 
-        // Player ·¹ÀÌ¾î¸¦ Ã£¾Æ Å¸°Ù ¼³Á¤
         FindEnemy();
     }
 
@@ -19,21 +18,18 @@ public class EnemyAttackAI : MonoBehaviour
     {
         if (!isColliding && target != null)
         {
-            Move(target.position); // Å¸°ÙÀ¸·Î ÀÌµ¿
+            Move(target.position);
         }
     }
 
     private void Move(Vector2 targetPosition)
     {
-        // ´Ü¼øÈ÷ x ¹æÇâ¸¸ °è»êÇÏ¿© ÀÌµ¿
         float direction = targetPosition.x - transform.position.x;
 
-        // ¹æÇâ¿¡ µû¶ó ÀÌµ¿ ¼Óµµ ¼³Á¤ (Normalize »ç¿ëÇÏÁö ¾ÊÀ½)
-        direction = direction > 0 ? 1 : -1; // ¿À¸¥ÂÊ: 1, ¿ŞÂÊ: -1
+        direction = direction > 0 ? 1 : -1;
 
         rigidBody.velocity = new Vector2(direction * moveSpeed, rigidBody.velocity.y);
 
-        // ½ºÇÁ¶óÀÌÆ® ¹æÇâ ¼³Á¤
         GetComponent<SpriteRenderer>().flipX = direction < 0;
     }
 
@@ -41,9 +37,9 @@ public class EnemyAttackAI : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Debug.Log($"{gameObject.name}°¡ {collision.gameObject.name}¿Í Ãæµ¹Çß½À´Ï´Ù.");
-            isColliding = true; // Ãæµ¹ »óÅÂ ¼³Á¤
-            rigidBody.velocity = Vector2.zero; // ÀÌµ¿ ¸ØÃã
+            Debug.Log($"{gameObject.name}: {collision.gameObject.name} ì™€ ì¶©ëŒ.");
+            isColliding = true;
+            rigidBody.velocity = Vector2.zero;
         }
     }
 
@@ -54,12 +50,12 @@ public class EnemyAttackAI : MonoBehaviour
 
         if (enemies.Length > 0)
         {
-            target = enemies[0].transform; // °¡Àå °¡±î¿î ÀûÀ» Å¸°ÙÀ¸·Î ¼³Á¤
-            Debug.Log($"Å¸°Ù ¼³Á¤: {target.name}");
+            target = enemies[0].transform;
+            Debug.Log($"{gameObject.name}: {target.name} ë°œê²¬");
         }
         else
         {
-            Debug.LogWarning("ÀûÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù!");
+            Debug.LogWarning("í”Œë ˆì´ì–´ ìœ ë‹›ì´ ì—†ìŒ!");
         }
     }
 }
