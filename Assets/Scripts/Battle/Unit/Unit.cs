@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    public TeamType team;
+    public UnitState state;
+
+    public UnitState getState() { return state; }
+    public void setState(UnitState state) { this.state = state; }
+
     public int maxHP = 10;
     public int currentHP = 10;
     public int attackPower = 1;
@@ -24,12 +30,13 @@ public class Unit : MonoBehaviour
     public void takeDamage(int damage)
     {
         currentHP -= damage;
-        if(currentHP <= 0)
+        Debug.Log($"{gameObject.name} 체력: {currentHP}");
+
+        if (currentHP <= 0)
         {
             currentHP = 0;
             Die();
         }
-        Debug.Log($"{gameObject.name} 체력: {currentHP}");
     }
     public void Die()
     {
@@ -44,7 +51,10 @@ public class Unit : MonoBehaviour
         // Die Effect Jump
         rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
         // Destroy
-        Invoke("DeActive", 0.5f);
+        // Invoke("DeActive", 0.5f);
+
+        setState(UnitState.Dead);
+        Managers.Battle.OnUnitDied();
     }
     void DeActive()
     {

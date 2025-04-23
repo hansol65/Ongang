@@ -1,15 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.IO;
 using System.Runtime.CompilerServices;
 using UnityEditor;
-
-public enum UnitState
-{
-    Idle,
-    Searching,
-    Fighting,
-    Dead
-}
 
 public class AttackAI : MonoBehaviour
 {
@@ -17,20 +9,21 @@ public class AttackAI : MonoBehaviour
     public float attackCooldown = 1f;
     private Rigidbody2D rigidBody;
     private Transform target;
+    private Unit unit;
     public bool isColliding = false;
     private float lastAttackTime;
-    private UnitState currentState = UnitState.Searching;
 
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        unit = GetComponent<Unit>();
 
         FindEnemy();
     }
 
     private void FixedUpdate()
     {
-        switch (currentState)
+        switch (unit.getState())
         {
             case UnitState.Idle:
                 break;
@@ -47,7 +40,7 @@ public class AttackAI : MonoBehaviour
 
                 if (isColliding)
                 {
-                    currentState = UnitState.Fighting;
+                    unit.setState(UnitState.Fighting);
                 }
                 break;
 
@@ -57,7 +50,7 @@ public class AttackAI : MonoBehaviour
                     Attack();
                 } else
                 {
-                    currentState = UnitState.Searching;
+                    unit.setState(UnitState.Searching);
                 }
                 break;
 
@@ -86,7 +79,7 @@ public class AttackAI : MonoBehaviour
             rigidBody.velocity = Vector2.zero;
             target = collision.transform;
 
-            currentState = UnitState.Fighting;
+            unit.setState(UnitState.Fighting);
         }
     }
 
@@ -114,7 +107,7 @@ public class AttackAI : MonoBehaviour
         {
             target = null;
             Debug.LogWarning("Enemy 를 찾을 수 없습니다.");
-            currentState = UnitState.Idle;
+            unit.setState(UnitState.Idle);
         }
     }
 
@@ -123,11 +116,10 @@ public class AttackAI : MonoBehaviour
         if (target == null)
         {
             Debug.LogWarning("Enemy 를 찾을 수 없습니다.");
-            currentState = UnitState.Searching;
+            unit.setState(UnitState.Searching);
             return;
         }
 
-        // ��Ÿ�� üũ
         if (Time.time - lastAttackTime >= attackCooldown)
         {
             lastAttackTime = Time.time;
@@ -138,8 +130,6 @@ public class AttackAI : MonoBehaviour
                 targetUnit.takeDamage(GetComponent<Unit>().attackPower);
 
                 // test
-                Unit unit = GetComponent<Unit>();
-
                 unit.stat.Exp += 1;
                 Debug.Log($"Exp : {unit.stat.Exp}");
 

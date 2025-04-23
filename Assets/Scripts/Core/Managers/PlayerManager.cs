@@ -6,6 +6,7 @@ using System.IO;
 public class PlayerManager
 {
     private GameObject playerUnitInstance;
+    public GameObject getPlayer() { return playerUnitInstance; }
 
     public void SpawnPlayerUnit(GameObject playerPrefab, Vector2 spawnPosition)
     {
@@ -18,7 +19,7 @@ public class PlayerManager
         playerUnitInstance = Object.Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
         Object.DontDestroyOnLoad(playerUnitInstance);
 
-        // Player layer�� ����
+        // Player layer
         playerUnitInstance.layer = LayerMask.NameToLayer("Player");
 
         // Attach: MovementAI
@@ -39,7 +40,7 @@ public class PlayerManager
         if (playerUnitInstance.GetComponent<AttackAI>() == null)
         {
             var attackAI = playerUnitInstance.AddComponent<AttackAI>();
-            attackAI.enabled = false; // ó������ AttackAI ��Ȱ��ȭ
+            attackAI.enabled = false;
         }
 
         Debug.Log("[PlayerManager] Player Unit created.");
@@ -50,6 +51,7 @@ public class PlayerManager
         string path = Path.Combine(Application.dataPath, "PlayerData.json");
         string jsonData = File.ReadAllText(path);
         unit.stat = JsonUtility.FromJson<Stat>(jsonData);
+        playerUnitInstance.GetComponent<Unit>().team = TeamType.Ally; // 플레이어 유닛의 팀을 Ally 로 설정
     }
 
     public void EnterBattleField()
@@ -68,6 +70,9 @@ public class PlayerManager
         {
             attackAI.enabled = true;
         }
+
+        // BattleManager 에 Unit 등록
+        Managers.Battle.RegisterUnit(playerUnitInstance.GetComponent<Unit>());
 
         Debug.Log("[PlayerManager] Entered Battle Field.");
     }

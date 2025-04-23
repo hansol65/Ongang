@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class MovementAI : MonoBehaviour
 {
-    public float moveSpeed = 2f;    // 이동 속도
-    private int defaultDirection;  // 디폴트 방향(-1: 좌, 0: 가만히, 1: 우)
-    private float directionChangeCooldown;  // 방향 변경 쿨타임
+    public float moveSpeed = 2f;
+    private int defaultDirection;
+    private float directionChangeCooldown;
     private SpriteRenderer spriteRenderer;
-    private Rigidbody2D rigidBody; // Rigidbody2D 추가
+    private Rigidbody2D rigidBody;
 
-    private LayerMask groundLayer; // 바닥 체크를 위한 레이어
-    private bool isActive = true;  // 활성화 상태 제어 변수
+    private LayerMask groundLayer;
+    private bool isActive = true;
 
 
     private void Start()
@@ -23,7 +23,7 @@ public class MovementAI : MonoBehaviour
 
     private void Update()
     {
-        if (isActive) // 활성화 상태에서만 움직임 처리
+        if (isActive)
         {
             DefaultMovement();
         }
@@ -31,23 +31,21 @@ public class MovementAI : MonoBehaviour
 
     private void DefaultMovement()
     {
-        // Raycast로 바닥 체크
+        // Raycast
         if (IsGrounded(defaultDirection))
         {
-            rigidBody.velocity = new Vector2(defaultDirection * moveSpeed, rigidBody.velocity.y); // 속도 설정
+            rigidBody.velocity = new Vector2(defaultDirection * moveSpeed, rigidBody.velocity.y);
 
-            // 스프라이트 방향 전환
             if (defaultDirection < 0)
-                spriteRenderer.flipX = true; // 왼쪽으로 이동
+                spriteRenderer.flipX = true;
             else if (defaultDirection > 0)
-                spriteRenderer.flipX = false; // 오른쪽으로 이동
+                spriteRenderer.flipX = false;
         }
         else
         {
-            ChangeDirection(); // 바닥이 없으면 방향 전환
+            ChangeDirection();
         }
 
-        // 쿨타임 지나면 새로운 랜덤 방향 설정
         directionChangeCooldown -= Time.deltaTime;
         if (directionChangeCooldown <= 0)
         {
@@ -57,30 +55,30 @@ public class MovementAI : MonoBehaviour
 
     private void ChangeDirection()
     {
-        defaultDirection = Random.Range(-1, 2);    // 랜덤으로 -1, 0, 1 방향 선택
-        directionChangeCooldown = Random.Range(2f, 5f); // 대기 시간 2에서 5초 사이
+        defaultDirection = Random.Range(-1, 2);
+        directionChangeCooldown = Random.Range(2f, 5f);
     }
 
     private bool IsGrounded(float direction)
     {
-        // Raycast로 바닥 체크
+        // Raycast
         Vector2 origin = new Vector2(transform.position.x + direction * 0.5f, transform.position.y);
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 1f, groundLayer);
-        Debug.DrawRay(origin, Vector2.down * 1f, Color.red); // Raycast 디버그용
+        Debug.DrawRay(origin, Vector2.down * 1f, Color.red); // Raycast
         return hit.collider != null;
     }
 
-    // MovementAI 비활성화
+    // MovementAI
     public void StopMovement()
     {
         isActive = false;
-        rigidBody.velocity = Vector2.zero; // 이동 멈춤
+        rigidBody.velocity = Vector2.zero;
     }
 
-    // MovementAI 활성화
+    // MovementAI
     public void ResumeMovement()
     {
         isActive = true;
-        ChangeDirection(); // 방향 변경
+        ChangeDirection();
     }
 }
