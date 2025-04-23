@@ -10,11 +10,13 @@ public class SceneManagerEx
 
     public SceneManagerEx()
     {
+        // 씬이 로드될 때마다 실행될 메서드 등록
         SceneManager.sceneLoaded += OnSceneLoadedHandler;
     }
 
     ~SceneManagerEx()
     {
+        // 소멸될 때 메서드 해제
         SceneManager.sceneLoaded -= OnSceneLoadedHandler;
     }
 
@@ -34,7 +36,7 @@ public class SceneManagerEx
             Managers.Battle.OnBattleSceneLoaded();
             Managers.Player.EnterBattleField();
         } else {
-            Managers.Player.ExitBattleField(); // ��Ʋ�ʵ� ����
+            Managers.Player.ExitBattleField();
          }
     }
 }
