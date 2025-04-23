@@ -3,7 +3,7 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     public TeamType team;
-    public UnitState state;
+    private UnitState state;
 
     public UnitState getState() { return state; }
     public void setState(UnitState state) { this.state = state; }

@@ -31,8 +31,8 @@ public class BattleManager
 
     private void CheckBattleEnd()
     {
-        bool alliesDead = allies.All(u => u.state == UnitState.Dead);
-        bool enemiesDead = enemies.All(u => u.state == UnitState.Dead);
+        bool alliesDead = allies.All(u => u.getState() == UnitState.Dead);
+        bool enemiesDead = enemies.All(u => u.getState() == UnitState.Dead);
 
         Debug.Log(allies + ": " + alliesDead);
         GameObject player = Managers.Player.getPlayer();
@@ -72,6 +72,7 @@ public class BattleManager
 
         Debug.Log("배틀 종료: " + result);
         battleResult = result;
+
         // UI 호출
     }
 
