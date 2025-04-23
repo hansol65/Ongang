@@ -18,6 +18,7 @@ public class AttackAI : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         unit = GetComponent<Unit>();
 
+        unit.setState(UnitState.Searching);
         FindEnemy();
     }
 
@@ -35,6 +36,7 @@ public class AttackAI : MonoBehaviour
 
                 if (target != null && !isColliding)
                 {
+                    Debug.Log("타겟 찾았고 이제 움직일게: " + target.position);
                     Move(target.position);
                 }
 
@@ -74,7 +76,7 @@ public class AttackAI : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            Debug.Log($"{gameObject.name}: {collision.gameObject.name}와 충돌.");
+            // Debug.Log($"{gameObject.name}: {collision.gameObject.name}와 충돌.");
             isColliding = true;
             rigidBody.velocity = Vector2.zero;
             target = collision.transform;
@@ -87,7 +89,7 @@ public class AttackAI : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && collision.transform == target)
         {
-            Debug.Log($"{gameObject.name} 가 {collision.gameObject.name} 와 충돌했습니다.");
+            // Debug.Log($"{gameObject.name} 가 {collision.gameObject.name} 와 충돌했습니다.");
             isColliding = false;
             target = null;
         }
@@ -131,7 +133,7 @@ public class AttackAI : MonoBehaviour
 
                 // test
                 unit.stat.Exp += 1;
-                Debug.Log($"Exp : {unit.stat.Exp}");
+                // Debug.Log($"Exp : {unit.stat.Exp}");
 
                 string jsonData = JsonUtility.ToJson(unit.stat);
                 string path = Path.Combine(Application.dataPath, "PlayerData.json");
