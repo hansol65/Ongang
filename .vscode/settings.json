@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "ongangang.sln"
+    "dotnet.defaultSolution": "Ongang.sln",
+    "dotnet.preferCSharpExtension": true
 }
